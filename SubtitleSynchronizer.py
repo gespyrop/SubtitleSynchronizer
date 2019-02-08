@@ -7,7 +7,7 @@ and delay the subtitles by a specific amount of time.
 
 file = raw_input("\nEnter subtitles file name: ")
 
-if file[-4:] != ".srt" and file[-4:] != ".txt":
+if file[-4:] not in [".srt", ".txt"]:
 	file += ".srt"
 
 def stringFixer(num):
