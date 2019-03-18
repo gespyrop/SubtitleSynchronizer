@@ -24,7 +24,6 @@ def stringFixer(num):
 		return "00"
 
 def timeIncrease(time, shiftTime):
-	print(time)
 	try:
 		newSec = int(time[6:8]) + shiftTime
 		increaseMin = 0
