@@ -5,7 +5,12 @@ With this program I can change the subtitles' file permanently
 and delay the subtitles by a specific amount of time.
 """
 
-file = raw_input("\nEnter subtitles file name: ")
+from sys import argv
+
+if len(argv) == 1: 
+	file = raw_input("\nEnter subtitles file name: ")
+else:
+	file = argv[1]
 
 if file[-4:] not in [".srt", ".txt"]:
 	file += ".srt"
@@ -19,26 +24,31 @@ def stringFixer(num):
 		return "00"
 
 def timeIncrease(time, shiftTime):
-	newSec = int(time[6:8]) + shiftTime
-	increaseMin = 0
-	if newSec < 60:
-		newSec = stringFixer(newSec)
-	else:
-		increaseMin = newSec / 60
-		newSec = stringFixer(newSec % 60)
+	print(time)
+	try:
+		newSec = int(time[6:8]) + shiftTime
+		increaseMin = 0
+		if newSec < 60:
+			newSec = stringFixer(newSec)
+		else:
+			increaseMin = newSec / 60
+			newSec = stringFixer(newSec % 60)
 
-	newMin = int(time[3:5]) + increaseMin
-	increaseHr = 0
-	if newMin < 60:
-		newMin = stringFixer(newMin)
-	else:
-		increaseHr = newMin / 60
-		newMin = stringFixer(newMin % 60)
-	
-	newHr = int(time[:2]) + increaseHr
-	newHr = stringFixer(newHr)
+		newMin = int(time[3:5]) + increaseMin
+		increaseHr = 0
+		if newMin < 60:
+			newMin = stringFixer(newMin)
+		else:
+			increaseHr = newMin / 60
+			newMin = stringFixer(newMin % 60)
+		
+		newHr = int(time[:2]) + increaseHr
+		newHr = stringFixer(newHr)
 
-	return newHr + ":" + newMin + ":" + newSec
+		return newHr + ":" + newMin + ":" + newSec
+	except ValueError:
+		print "\nError: Invalid time format! (%s)" % time
+		exit(1)
 
 def timeToSec(time):
 	return int(time[6:8]) + int(time[3:5]) * 60 + int(time[:2]) * 3600
